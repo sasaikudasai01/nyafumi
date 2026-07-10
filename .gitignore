@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# PyInstaller / сборка exe
+build/
+dist/
+*.spec
+
+# PySide / Qt cache
+.qmlcache/
+*.qmlc
+*.jsc
+
+# Qt Creator / Qt Design Studio
+*.qmake.stash
+*.pro.user
+*.pro.user.*
+CMakeLists.txt.user
+.idea/
+.vscode/
+
+# IDE
+*.iml
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment variables
+.env
+.env.*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Python packaging
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter (если вдруг появятся)
+.ipynb_checkpoints/
+
+# User data / app data
+*.json
+*.db
+
+# FFmpeg temporary files
+*.part
+
+# Build artifacts
+release/
+debug/
+
+# Windows executable
+*.exe
+*.dll
+
+# PySide generated files
+*.pyd
+
+# Images
+*.jpg
+*.png
+*.jpeg
+*.webp
+*.gif
