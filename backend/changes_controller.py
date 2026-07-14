@@ -22,8 +22,11 @@ class ChangesController(QObject):
         # steam crop
         counter = 1
         x = 0
+        y = 0
 
         while counter < 5:
-            subprocess.run(["ffmpeg", "-i", "mama nyaf 4 steem.jpg", "-vf", f"crop={width}:{height}:{x}:0", "-y", f"sir/mama nyaf cropped {counter}.jpg"])
-            counter += 1
-            x += 150
+            if x == 6 or x == 11:
+                subprocess.run(["ffmpeg", "-i", "mama nyaf 4 steem.jpg", "-vf", f"crop={width}:{height}:{x}:{y}", "-y", f"sir/mama nyaf cropped {counter}.jpg"])
+                counter += 1
+                x += 150
+                y += 450

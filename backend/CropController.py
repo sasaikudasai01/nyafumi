@@ -1,6 +1,7 @@
-from PySide6.QtCore import QObject, Property, Signal, Slot, QUrl
+from PySide6.QtCore import QObject, Property, Signal, Slot
 from config import cfg
 import subprocess
+from pathlib import Path
 
 
 class UIState_crop(QObject):
@@ -28,8 +29,6 @@ class UIState_crop(QObject):
     
     @Slot()
     def update_info(self):
-        #self._width = self.image.original_width
-        #self._height = self.image.original_height
         self._width = 300
         self._height = 300
 
@@ -92,4 +91,29 @@ class UIState_crop(QObject):
         file_name = self.image.img_path.stem
         file_format = self.image.img_path.suffix
 
-        subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={crop_width}:{crop_height}:{x}:{y}", "-y", f"{file_name} cropped.{file_format}"])
+        subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={crop_width}:{crop_height}:{x}:{y}", "-y", f"{file_name} cropped.{file_format.replace('.', '')}"])
+    
+    @Slot()
+    def crop_steam(self):
+        # 450, 900, 1350
+
+        max_counter = {450: 5, 900: 10, 1350: 15} # количество кусков изображения зависит от высоты картинки
+
+        for i in range(max_counter[self.image.height]):
+            row = i // 5
+            col = i % 5
+
+            x = col * 150
+            y = row * 450
+
+            img_path = cfg.base_dir / "sir" / f"{self.image.img_path.stem} steam {i + 1}{self.image.img_path.suffix}"
+
+            subprocess.run(
+                ["ffmpeg", "-i", self.image.img_path, "-vf", f"crop=150:450:{x}:{y}", "-y", img_path],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL # очистить весь вывод ffmpeg
+            )
+
+            # редактирование байтов
+            data = bytearray(Path(img_path).read_bytes())
+            data[-1] = 0x67 # замена последнего байта. это нужно чтобы стим нормально скушал картинку
+            Path(img_path).write_bytes(data)

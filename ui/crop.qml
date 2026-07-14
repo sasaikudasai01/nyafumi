@@ -82,21 +82,6 @@ Item {
 
             Layout.preferredWidth: width
             Layout.preferredHeight: height
-
-            // отладочный прямоугольник
-            //Rectangle {
-            //    anchors.fill: picture
-            //    color: "transparent"
-            //    border.color: "#000DFF"
-            //    border.width: 3 * scaleFactor
-            //}
-
-            Component.onCompleted: {
-                console.log("imageContainer.width:", imageContainer.width)
-                console.log("imageContainer.height:", imageContainer.height)
-                console.log("picture.width:", picture.width)
-                console.log("picture.height:", picture.height)
-            }
         }
         
 
@@ -345,12 +330,4 @@ Item {
             }
         }
     }
-
-    //onWidthChanged: {
-    //    console.log("imageContainer.width:", imageContainer.width)
-    //    console.log("imageContainer.height:", imageContainer.height)
-    //    console.log("picture.width:", picture.width)
-    //    console.log("picture.height:", picture.height)
-    //    console.log("root.scaleFactor:", root.scaleFactor)
-    //}
 }

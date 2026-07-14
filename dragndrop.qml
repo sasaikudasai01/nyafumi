@@ -61,7 +61,7 @@ Item {
         fileMode: FileDialog.OpenFile   // только один файл
 
         onAccepted: {
-            setView.set_new_view("crop.qml", selectedFile)
+            setView.set_new_view("SteamWorkshopShowcase.qml", selectedFile)
         }
     }
 
@@ -97,7 +97,7 @@ Item {
 
             onDropped: function(drop) {
                 if (drop.urls.length > 0) {
-                    setView.set_new_view("crop.qml", drop.urls[0])
+                    setView.set_new_view("SteamWorkshopShowcase.qml", drop.urls[0])
                 }
             }
         }
