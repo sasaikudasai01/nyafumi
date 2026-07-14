@@ -42,7 +42,8 @@ Item {
         spacing: 10 * root.scaleFactor
 
         width: 480 * root.scaleFactor
-        height: 939 * root.scaleFactor
+        //height: 373 * root.scaleFactor
+        height: (image.height / (image.width / width)) + 85 * root.scaleFactor
 
         Item {
             id: imageContainer

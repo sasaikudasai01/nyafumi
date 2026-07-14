@@ -1,8 +1,7 @@
-from PySide6.QtCore import QObject, Property, Signal, QUrl, Slot
+from PySide6.QtCore import QObject, Property, Signal, QUrl
 from config import cfg
 import subprocess
 import json
-from pathlib import Path
 
 class CurrentImage(QObject):
     imageChanged = Signal()

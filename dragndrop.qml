@@ -61,7 +61,7 @@ Item {
         fileMode: FileDialog.OpenFile   // только один файл
 
         onAccepted: {
-            setView.set_new_view("SteamWorkshopShowcase.qml", selectedFile)
+            setView.set_new_view("crop.qml", selectedFile)
         }
     }
 
