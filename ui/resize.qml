@@ -40,9 +40,8 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
 
-        spacing: 85 * root.scaleFactor
+        spacing: 20 * root.scaleFactor
 
-        width: 1900 * root.scaleFactor
         height: 667 * root.scaleFactor
 
         // редактируемая картинка
@@ -50,12 +49,12 @@ Item {
             id: picture
             source: image.image
             
-            height: 667 * root.scaleFactor
+            height: parent.height
 
             // если ширина больше высоты
             width: image.width > image.height
                     // если ширина картинки меньше 1067 то ширина = ширина картинки
-                    ? Math.min(image.width, 1067) * root.scaleFactor
+                    ? Math.min(image.width, 1080) * root.scaleFactor
                     : image.width / (image.height / height)
 
             fillMode: Image.PreserveAspectFit
@@ -86,7 +85,6 @@ Item {
 
             // row эдементов редактирования
             ColumnLayout {
-                width: 900 * root.scaleFactor
                 spacing: 50 * root.scaleFactor
 
                 // MAINTAIN ASPECT RATIO
@@ -262,7 +260,7 @@ Item {
             // row кнопок
             RowLayout {
                 Layout.fillWidth: true
-                spacing: 0
+                spacing: 10
                 
                 // кнопка APPLY
                 UI.NyafButton {

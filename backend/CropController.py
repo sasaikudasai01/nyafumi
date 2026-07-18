@@ -10,6 +10,7 @@ class UIState_crop(QObject):
     imageChanged = Signal()
     xChanged = Signal()
     yChanged = Signal()
+    rowsChanged = Signal()
 
     def __init__(self, image, set_view):
         super().__init__()
@@ -26,6 +27,9 @@ class UIState_crop(QObject):
 
         self._x_coord = 0
         self._y_coord = 0
+
+        # steam
+        self._rows = 3
     
     @Slot()
     def update_info(self):
@@ -81,10 +85,25 @@ class UIState_crop(QObject):
     def getYCoord(self):
         return self._y_coord
 
+
+
+    def setRows(self, num):
+        # ограничение до цифр от 1 до 3
+        if num in [1, 2, 3]:
+            self._rows = num
+            self.rowsChanged.emit()
+        else:
+            self._rows = 3
+            self.rowsChanged.emit()
+    
+    def getRows(self):
+        return self._rows
+
     width = Property(int, getWidth, setWidth, notify=widthChanged)
     height = Property(int, getHeight, setHeight, notify=heightChanged)
     x_coord = Property(int, getXCoord, setXCoord, notify=xChanged)
     y_coord = Property(int, getYCoord, setYCoord, notify=yChanged)
+    rows = Property(int, getRows, setRows, notify=rowsChanged)
 
     @Slot(int, int, int, int)
     def crop(self, crop_width, crop_height, x, y):
@@ -92,24 +111,26 @@ class UIState_crop(QObject):
         file_format = self.image.img_path.suffix
 
         subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={crop_width}:{crop_height}:{x}:{y}", "-y", f"{file_name} cropped.{file_format.replace('.', '')}"])
-    
+
     @Slot()
     def crop_steam(self):
-        # 450, 900, 1350
+        max_counter = {1: 5, 2: 10, 3: 15} # количество кусков изображения зависит от количества rows
 
-        max_counter = {450: 5, 900: 10, 1350: 15} # количество кусков изображения зависит от высоты картинки
+        for i in range(max_counter[self._rows]):
+            # размеры кусков которые строят всю картинку
+            part_width = self.image.original_width / 5
+            part_height = self.image.original_height / self._rows
 
-        for i in range(max_counter[self.image.height]):
             row = i // 5
             col = i % 5
 
-            x = col * 150
-            y = row * 450
+            x = col * part_width
+            y = row * part_height
 
             img_path = cfg.base_dir / "sir" / f"{self.image.img_path.stem} steam {i + 1}{self.image.img_path.suffix}"
 
             subprocess.run(
-                ["ffmpeg", "-i", self.image.img_path, "-vf", f"crop=150:450:{x}:{y}", "-y", img_path],
+                ["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={part_width}:{part_height}:{x}:{y}", "-y", img_path],
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL # очистить весь вывод ffmpeg
             )
 

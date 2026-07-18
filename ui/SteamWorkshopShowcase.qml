@@ -41,16 +41,14 @@ Item {
 
         spacing: 10 * root.scaleFactor
 
-        width: 480 * root.scaleFactor
-        //height: 373 * root.scaleFactor
-        height: (image.height / (image.width / width)) + 85 * root.scaleFactor
-
         Item {
             id: imageContainer
 
-            // steam workshop showcase max size
-            height: parent.height - 75 * scaleFactor // отнимается высота кнопок
-            width: parent.width
+            // вписать картинку в 1500х700
+            width: if (image.height / (image.width / 1500) <= 700 * root.scaleFactor) {
+                return 1500 * root.scaleFactor
+            } else { return image.width / (image.height / (700 * root.scaleFactor))}
+            height: image.height / (image.width / width)
 
             // редактируемая картинка
             Image {
@@ -64,22 +62,86 @@ Item {
                 asynchronous: true
             }
 
-            Rectangle {
-                border.width: 3 * scaleFactor
+            // вертикальные 4
+            Repeater {
+                model: 4
+                Rectangle {
+                    width: 5 * scaleFactor
+                    height: parent.height
+                    border.width: 3 * scaleFactor
+                    
+                    x: (index + 1) * parent.width / 5
 
-                width: parent.width
-                height: 5 * scaleFactor
+                    color: "#000333"
+                    border.color: "#000333"
 
-                color: "transparent"
-                border.color: "#000DFF"
+                    Layout.alignment: Qt.AlignCenter
+                }
+            }
 
-                anchors.centerIn: parent
+            // горизонтальные 2
+            Repeater {
+                model: uiStateCrop.rows - 1
+                Rectangle {
+                    width: parent.width
+                    height: 5 * scaleFactor
+                    border.width: 3 * scaleFactor
+                    
+                    y: (index + 1) * parent.height / uiStateCrop.rows
+
+                    color: "#000333"
+                    border.color: "#000333"
+
+                    Layout.alignment: Qt.AlignCenter
+                }
             }
 
             Layout.preferredWidth: width
             Layout.preferredHeight: height
+            Layout.alignment: Qt.AlignCenter
         }
         
+
+
+        // rows input
+        RowLayout {
+
+            Layout.fillWidth: true
+            spacing: 0
+
+            Text {
+                id: rowsTitle
+                text: "ROWS"
+                color: "white"
+
+                font.pixelSize: 48 * root.scaleFactor
+                font.family: "Inter"
+                font.weight: Font.Black
+
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            }
+
+            Item { Layout.fillWidth: true } // заполнить пустым пространством
+
+            // TextField для ввода количества rows
+            TextField {
+                id: rowsInput
+                text: uiStateCrop.rows
+                color: "white"
+
+                onTextEdited: uiStateCrop.rows = text
+
+                font.pixelSize: 48 * root.scaleFactor
+                font.family: "Inter"
+                font.weight: Font.Black
+
+                background: null
+
+                validator: IntValidator { bottom: 1; top: 3 } // ограничить числами от 1 до 3
+            }
+        }
+
+
 
         // row кнопок
         RowLayout {
@@ -89,31 +151,31 @@ Item {
             
             // кнопка CROP
             UI.NyafButton {
-                text: "CROP"
+                    text: "CROP"
 
-                scaleFactor: root.scaleFactor
+                    scaleFactor: root.scaleFactor
 
-                hoverColor: "black"
-                baseColor: "#000DFF"
-                glowColor: "#AB000DFF"
-                borderColor: "#000DFF"
+                    hoverColor: "black"
+                    baseColor: "#000DFF"
+                    glowColor: "#AB000DFF"
+                    borderColor: "#000DFF"
 
-                buttonGlow: 1
+                    buttonGlow: 1
 
-                onClicked: uiStateCrop.crop_steam()
+                    onClicked: uiStateCrop.crop_steam()
             }
-
-            //Item { Layout.fillWidth: true } // заполнить пустым пространством
+            
+            Item { Layout.fillWidth: true } // заполнить пустым пространством
 
             // кнопка cancel
             UI.NyafButton {
-                text: "CANCEL"
+                    text: "CANCEL"
 
-                scaleFactor: root.scaleFactor
+                    scaleFactor: root.scaleFactor
 
-                buttonGlow: 1
+                    buttonGlow: 1
 
-                onClicked: setView.set_new_view("dragndrop.qml", "")
+                    onClicked: setView.set_new_view("dragndrop.qml", "")
             }
         }
     }

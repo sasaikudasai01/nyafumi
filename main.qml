@@ -8,6 +8,8 @@ ApplicationWindow {
     width: 1900
     height: 990
 
+    title: "Nyafumi"
+
     property real scaleFactor: width / 1920
 
     Loader {

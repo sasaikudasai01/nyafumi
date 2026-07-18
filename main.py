@@ -2,6 +2,7 @@ import sys
 
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
+from PySide6.QtQuickControls2 import QQuickStyle
 
 from backend.changes_controller import ChangesController
 from backend.UIStateController import UIState_resize
@@ -12,9 +13,11 @@ from view_changer import SetView
 
 from config import cfg
 
-#
+
 
 def main():
+    QQuickStyle.setStyle("Fusion") # dark theme
+
     app = QGuiApplication(sys.argv)
 
     engine = QQmlApplicationEngine()

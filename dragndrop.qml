@@ -53,6 +53,82 @@ Item {
         }
     }
 
+
+
+    Popup {
+        id: popup
+
+        width: 1600 * root.scaleFactor; height: 667 * root.scaleFactor
+
+        modal: true
+        focus: true
+
+        anchors.centerIn: parent
+
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        property url imageUrl
+
+        function show(url) {
+            imageUrl = url
+            open()
+        }
+
+        background: Rectangle {
+            color: "black"
+        }
+
+        ColumnLayout {
+            anchors.centerIn: parent
+
+            spacing: 10
+
+            // кнопка RESIZE
+            UI.NyafButton {
+                text: "RESIZE"
+                scaleFactor: root.scaleFactor
+                Layout.alignment: Qt.AlignCenter
+
+                hoverColor: "white"
+                baseColor: "black"
+                borderColor: "white"
+
+                textGlow: 1
+                onClicked: setView.set_new_view("resize.qml", popup.imageUrl)
+            }
+
+            // кнопка CROP
+            UI.NyafButton {
+                text: "CROP"
+                scaleFactor: root.scaleFactor
+                Layout.alignment: Qt.AlignCenter
+
+                hoverColor: "white"
+                baseColor: "black"
+                borderColor: "white"
+
+                textGlow: 1
+                onClicked: setView.set_new_view("crop.qml", popup.imageUrl)
+            }
+
+            // кнопка STEAM
+            UI.NyafButton {
+                text: "STEAM"
+                scaleFactor: root.scaleFactor
+                Layout.alignment: Qt.AlignCenter
+
+                hoverColor: "white"
+                baseColor: "black"
+                borderColor: "white"
+
+                textGlow: 1
+                onClicked: setView.set_new_view("SteamWorkshopShowcase.qml", popup.imageUrl)
+            }
+        }
+    }
+
+
+
     FileDialog {
         id: fileDialog
 
@@ -61,7 +137,7 @@ Item {
         fileMode: FileDialog.OpenFile   // только один файл
 
         onAccepted: {
-            setView.set_new_view("crop.qml", selectedFile)
+            popup.show(selectedFile)
         }
     }
 
@@ -97,7 +173,7 @@ Item {
 
             onDropped: function(drop) {
                 if (drop.urls.length > 0) {
-                    setView.set_new_view("SteamWorkshopShowcase.qml", drop.urls[0])
+                    popup.show(drop.urls[0])
                 }
             }
         }
