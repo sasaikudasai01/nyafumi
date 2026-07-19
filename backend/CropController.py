@@ -127,7 +127,11 @@ class UIState_crop(QObject):
             x = col * part_width
             y = row * part_height
 
-            img_path = cfg.base_dir / "sir" / f"{self.image.img_path.stem} steam {i + 1}{self.image.img_path.suffix}"
+            # создание папки steam если ее нет
+            save_dir = Path(cfg.base_dir / "steam")
+            save_dir.mkdir(parents=True, exist_ok=True)
+
+            img_path = save_dir / f"{self.image.img_path.stem} steam {i + 1}{self.image.img_path.suffix}"
 
             subprocess.run(
                 ["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={part_width}:{part_height}:{x}:{y}", "-y", img_path],
@@ -138,3 +142,5 @@ class UIState_crop(QObject):
             data = bytearray(Path(img_path).read_bytes())
             data[-1] = 0x67 # замена последнего байта. это нужно чтобы стим нормально скушал картинку
             Path(img_path).write_bytes(data)
+        
+        print("images are created in:", save_dir)

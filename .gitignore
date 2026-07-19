@@ -12,7 +12,6 @@ ENV/
 # PyInstaller / сборка exe
 build/
 dist/
-*.spec
 
 # PySide / Qt cache
 .qmlcache/
@@ -82,7 +81,6 @@ debug/
 
 # Images
 *.jpg
-*.png
 *.jpeg
 *.webp
 *.gif
