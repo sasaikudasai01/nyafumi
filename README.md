@@ -75,7 +75,7 @@ nyafumi/
 
 ## dragndrop.qml (Image choosing page)
 
-![Preview](screenshots/dragndrop qml.png)
+![Preview](screenshots/dragndrop_qml.png)
 
 ### Responsibilities
 
@@ -85,7 +85,7 @@ Drag&Drop the image or left click
 
 ## crop.qml
 
-![Preview](screenshots/crop qml.png)
+![Preview](screenshots/crop_qml.png)
 
 ### Responsibilities
 
@@ -101,7 +101,7 @@ Crop saves the new image in the same folder as the original image (temporarily).
 
 ## resize.qml
 
-![Preview](screenshots/resize qml.png)
+![Preview](screenshots/resize_qml.png)
 
 ### Responsibilities
 
@@ -114,9 +114,9 @@ Crop saves the new image in the same folder as the original image (temporarily).
 
 ## SteamWorkshopShowcase.qml
 
-![Preview](screenshots/steam 1.png)
+![Preview](screenshots/steam_1.png)
 
-![Preview](screenshots/steam 2.png)
+![Preview](screenshots/steam_2.png)
 
 ### Features
 
