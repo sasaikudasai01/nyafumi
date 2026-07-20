@@ -1,4 +1,5 @@
 from PySide6.QtCore import QObject, Property, Signal, Slot, QUrl
+from pathlib import Path
 from config import cfg
 import subprocess
 
@@ -120,9 +121,10 @@ class UIState_resize(QObject):
     percent = Property(int, getPercent, setPercent, notify=percentChanged)
     maintain_aspect_ratio = Property(str, getMaintain_aspect_ratio, setMaintain_aspect_ratio, notify=maintain_aspect_ratio_Changed)
 
-    @Slot(int, int)
-    def resize(self, width, height):
-        file_name = self.image.img_path.stem
-        file_format = self.image.img_path.suffix # возвращает формат с точкой
+    @Slot(int, int, QUrl)
+    def resize(self, width, height, save_path):
+        file_original_format = self.image.img_path.suffix
 
-        subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"scale={width}:{height}", "-y", f"{file_name} resized.{file_format.replace('.', '')}"])
+        local_path = Path(QUrl(save_path).toLocalFile())
+
+        subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"scale={width}:{height}", "-y", f'{local_path}{file_original_format}'])

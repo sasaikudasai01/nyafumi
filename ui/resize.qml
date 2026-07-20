@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 import "../components" as UI
 
 Item {
@@ -48,14 +49,14 @@ Item {
         Image {
             id: picture
             source: image.image
-            
-            height: parent.height
 
             // если ширина больше высоты
             width: image.width > image.height
                     // если ширина картинки меньше 1067 то ширина = ширина картинки
                     ? Math.min(image.width, 1080) * root.scaleFactor
-                    : image.width / (image.height / height)
+                    : image.width / (image.height / parent.height)
+            
+            height: image.height / (image.width / width)
 
             fillMode: Image.PreserveAspectFit
             sourceSize: Qt.size(width, height) // декодировать картинку чтобы она была нужного размера
@@ -262,6 +263,18 @@ Item {
                 Layout.fillWidth: true
                 spacing: 10
                 
+                FileDialog {
+                    id: saveDialog
+
+                    title: "Save image"
+
+                    fileMode: FileDialog.SaveFile
+
+                    currentFile: image.image_name
+
+                    onAccepted: {uiStateResize.resize(widthInput.text, heightInput.text, selectedFile)}
+                }
+
                 // кнопка APPLY
                 UI.NyafButton {
                     text: "RESIZE"
@@ -275,7 +288,7 @@ Item {
 
                     buttonGlow: 1
 
-                    onClicked: uiStateResize.resize(widthInput.text, heightInput.text)
+                    onClicked: saveDialog.open()
                 }
 
                 Item { Layout.fillWidth: true } // заполнить пустым пространством

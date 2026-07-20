@@ -1,12 +1,15 @@
 from PySide6.QtCore import QObject, Property, Signal, QUrl
+from pathlib import Path
 from config import cfg
 import subprocess
 import json
 
 class CurrentImage(QObject):
     imageChanged = Signal()
+    imagenameChanged = Signal()
     widthChanged = Signal()
     heightChanged = Signal()
+    formatChanged = Signal()
 
     def __init__(self):
         super().__init__()
@@ -15,6 +18,8 @@ class CurrentImage(QObject):
 
         self.original_width = 0
         self.original_height = 0
+
+        self._name = None
     
     def getImageMetas(self, path):
         # получить метаданные картинки
@@ -66,8 +71,23 @@ class CurrentImage(QObject):
         self.original_height = value
         self.heightChanged.emit()
     
+
+    def getFormat(self):
+        if self.img_path:
+            print(Path(self.img_path.suffix))
+            return Path(self.img_path).suffix
+        else:
+            print("else")
+            return " "
+        
+    def getImageName(self):
+        if self.img_path:
+            return Path(self.img_path).stem
+
     image = Property(QUrl, getImage, setImage, notify=imageChanged)
+    image_name = Property(str, getImageName, notify=imagenameChanged)
     width = Property(int, getWidth, setWidth, notify=widthChanged)
     height = Property(int, getHeight, setHeight, notify=heightChanged)
+    format = Property(str, getFormat, notify=formatChanged)
 
 image = CurrentImage()

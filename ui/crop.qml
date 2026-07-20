@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 import "../components" as UI
 
 Item {
@@ -47,12 +48,13 @@ Item {
 
         Item {
             id: imageContainer
-            height: parent.height
             // если ширина больше высоты
             width: image.width > image.height
                     // если ширина картинки меньше 1067 то ширина = ширина картинки
                     ? Math.min(image.width, 1067) * root.scaleFactor
-                    : image.width / (image.height / height)
+                    : image.width / (image.height / parent.height)
+            
+            height: image.height / (image.width / width)
 
             // редактируемая картинка
             Image {
@@ -281,6 +283,18 @@ Item {
             RowLayout {
                 Layout.fillWidth: true
                 spacing: 0
+
+                FileDialog {
+                    id: saveDialog
+
+                    title: "Save image"
+
+                    fileMode: FileDialog.SaveFile
+
+                    currentFile: image.image_name
+
+                    onAccepted: {uiStateCrop.crop(widthInput.text, heightInput.text, cropArea.x / (imageContainer.width / image.width), cropArea.y / (imageContainer.width / image.width), selectedFile)}
+                }
                 
                 // кнопка CROP
                 UI.NyafButton {
@@ -295,7 +309,7 @@ Item {
 
                     buttonGlow: 1
 
-                    onClicked: uiStateCrop.crop(widthInput.text, heightInput.text, cropArea.x / (imageContainer.width / image.width), cropArea.y / (imageContainer.width / image.width))
+                    onClicked: saveDialog.open()
                 }
 
                 Item { Layout.fillWidth: true } // заполнить пустым пространством

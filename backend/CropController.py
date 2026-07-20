@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Property, Signal, Slot
+from PySide6.QtCore import QObject, Property, Signal, Slot, QUrl
 from config import cfg
 import subprocess
 from pathlib import Path
@@ -105,16 +105,20 @@ class UIState_crop(QObject):
     y_coord = Property(int, getYCoord, setYCoord, notify=yChanged)
     rows = Property(int, getRows, setRows, notify=rowsChanged)
 
-    @Slot(int, int, int, int)
-    def crop(self, crop_width, crop_height, x, y):
-        file_name = self.image.img_path.stem
-        file_format = self.image.img_path.suffix
+    @Slot(int, int, int, int, QUrl)
+    def crop(self, crop_width, crop_height, x, y, save_path):
+        file_original_format = self.image.img_path.suffix
 
-        subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={crop_width}:{crop_height}:{x}:{y}", "-y", f"{file_name} cropped.{file_format.replace('.', '')}"])
+        # из url в локальный файл
+        local_path = Path(QUrl(save_path).toLocalFile())
 
-    @Slot()
-    def crop_steam(self):
+        subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={crop_width}:{crop_height}:{x}:{y}", "-y", f'{local_path}{file_original_format}'])
+
+    @Slot(QUrl)
+    def crop_steam(self, save_path):
         max_counter = {1: 5, 2: 10, 3: 15} # количество кусков изображения зависит от количества rows
+
+        local_path = Path(QUrl(save_path).toLocalFile())
 
         for i in range(max_counter[self._rows]):
             # размеры кусков которые строят всю картинку
@@ -127,11 +131,7 @@ class UIState_crop(QObject):
             x = col * part_width
             y = row * part_height
 
-            # создание папки steam если ее нет
-            save_dir = Path(cfg.base_dir / "steam")
-            save_dir.mkdir(parents=True, exist_ok=True)
-
-            img_path = save_dir / f"{self.image.img_path.stem} steam {i + 1}{self.image.img_path.suffix}"
+            img_path = local_path / f"{self.image.img_path.stem} steam {i + 1}{self.image.img_path.suffix}"
 
             subprocess.run(
                 ["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={part_width}:{part_height}:{x}:{y}", "-y", img_path],
@@ -143,4 +143,4 @@ class UIState_crop(QObject):
             data[-1] = 0x67 # замена последнего байта. это нужно чтобы стим нормально скушал картинку
             Path(img_path).write_bytes(data)
         
-        print("images are created in:", save_dir)
+        print("images are created in:", local_path)

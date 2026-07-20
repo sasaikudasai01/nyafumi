@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 import "../components" as UI
 
 Item {
@@ -148,6 +149,12 @@ Item {
             Layout.fillWidth: true
 
             spacing: 10 * scaleFactor
+
+            FolderDialog {
+                id: saveDialog
+
+                onAccepted: {uiStateCrop.crop_steam(selectedFolder)}
+            }
             
             // кнопка CROP
             UI.NyafButton {
@@ -162,7 +169,7 @@ Item {
 
                     buttonGlow: 1
 
-                    onClicked: uiStateCrop.crop_steam()
+                    onClicked: saveDialog.open()
             }
             
             Item { Layout.fillWidth: true } // заполнить пустым пространством

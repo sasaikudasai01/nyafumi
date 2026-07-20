@@ -8,6 +8,7 @@ from backend.changes_controller import ChangesController
 from backend.UIStateController import UIState_resize
 from backend.ImageController import image
 from backend.CropController import UIState_crop
+from backend.FormatController import FormatChange
 
 from view_changer import SetView
 
@@ -37,6 +38,9 @@ def main():
 
     crop_state = UIState_crop(image, set_view)
     engine.rootContext().setContextProperty("uiStateCrop", crop_state)
+
+    format_sate = FormatChange(image)
+    engine.rootContext().setContextProperty("formatState", format_sate)
 
     # main qml file
     engine.load(cfg.base_dir / "main.qml")

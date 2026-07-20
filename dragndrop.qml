@@ -89,6 +89,8 @@ Item {
                 scaleFactor: root.scaleFactor
                 Layout.alignment: Qt.AlignCenter
 
+                changable_width: 300
+
                 hoverColor: "white"
                 baseColor: "black"
                 borderColor: "white"
@@ -103,6 +105,8 @@ Item {
                 scaleFactor: root.scaleFactor
                 Layout.alignment: Qt.AlignCenter
 
+                changable_width: 300
+
                 hoverColor: "white"
                 baseColor: "black"
                 borderColor: "white"
@@ -111,11 +115,29 @@ Item {
                 onClicked: setView.set_new_view("crop.qml", popup.imageUrl)
             }
 
+            // кнопка FORMAT
+            UI.NyafButton {
+                text: "FORMAT"
+                scaleFactor: root.scaleFactor
+                Layout.alignment: Qt.AlignCenter
+
+                changable_width: 300
+
+                hoverColor: "white"
+                baseColor: "black"
+                borderColor: "white"
+
+                textGlow: 1
+                onClicked: setView.set_new_view("ChangeFormat.qml", popup.imageUrl)
+            }
+
             // кнопка STEAM
             UI.NyafButton {
                 text: "STEAM"
                 scaleFactor: root.scaleFactor
                 Layout.alignment: Qt.AlignCenter
+
+                changable_width: 300
 
                 hoverColor: "white"
                 baseColor: "black"
@@ -133,7 +155,7 @@ Item {
         id: fileDialog
 
         title: "Select image"
-        nameFilters: ["Images (*.png *.jpg *.jpeg *.webp)"]
+        nameFilters: ["Images (*.png *.jpg *.jpeg *.webp *.gif)"]
         fileMode: FileDialog.OpenFile   // только один файл
 
         onAccepted: {
