@@ -1,4 +1,4 @@
-# nyafumi beta v1.0.1
+# nyafumi beta v1.1.1
 
 nyafumi is a program that lets you resize and crop images and, most importantly, prepares images for upload to the **Steam Workshop Showcase**. All you have to do is select **"STEAM"** and click **CROP**.
 
