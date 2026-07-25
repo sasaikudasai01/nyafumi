@@ -24,7 +24,7 @@ class CurrentImage(QObject):
     def getImageMetas(self, path):
         # получить метаданные картинки
         image_metas = subprocess.run([
-            "ffprobe",
+            cfg.ffprobe_path,
             "-v", "error",
             "-select_streams", "v:0",
             "-show_entries", "stream=width,height",

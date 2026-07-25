@@ -84,3 +84,7 @@ debug/
 *.jpeg
 *.webp
 *.gif
+
+ffmpeg/
+screenshots/steam_3.png
+screenshots/steam_4.png

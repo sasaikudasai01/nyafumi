@@ -112,7 +112,7 @@ class UIState_crop(QObject):
         # из url в локальный файл
         local_path = Path(QUrl(save_path).toLocalFile())
 
-        subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={crop_width}:{crop_height}:{x}:{y}", "-y", f'{local_path}{file_original_format}'])
+        subprocess.run([cfg.ffmpeg_path, "-i", self.image.img_path, "-vf", f"crop={crop_width}:{crop_height}:{x}:{y}", "-y", f'{local_path}{file_original_format}'])
 
     @Slot(QUrl)
     def crop_steam(self, save_path):
@@ -134,7 +134,7 @@ class UIState_crop(QObject):
             img_path = local_path / f"{self.image.img_path.stem} steam {i + 1}{self.image.img_path.suffix}"
 
             subprocess.run(
-                ["ffmpeg", "-i", self.image.img_path, "-vf", f"crop={part_width}:{part_height}:{x}:{y}", "-y", img_path],
+                [cfg.ffmpeg_path, "-i", self.image.img_path, "-vf", f"crop={part_width}:{part_height}:{x}:{y}", "-y", img_path],
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL # очистить весь вывод ffmpeg
             )
 

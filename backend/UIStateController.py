@@ -127,4 +127,4 @@ class UIState_resize(QObject):
 
         local_path = Path(QUrl(save_path).toLocalFile())
 
-        subprocess.run(["ffmpeg", "-i", self.image.img_path, "-vf", f"scale={width}:{height}", "-y", f'{local_path}{file_original_format}'])
+        subprocess.run([cfg.ffmpeg_path, "-i", self.image.img_path, "-vf", f"scale={width}:{height}", "-y", f'{local_path}{file_original_format}'])

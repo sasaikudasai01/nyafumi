@@ -16,6 +16,8 @@ The **README** will help you understand how to use **nyafumi**.
 
 ## Requirements
 
+In nyafumi releases, **ffmpeg is automatically included in the root directory**, so skip the “Requirements” section entirely if you're downloading the release rather than the source code..
+
 ```bash
 pip install -r requirements.txt
 ```

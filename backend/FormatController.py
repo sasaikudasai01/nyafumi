@@ -13,4 +13,4 @@ class FormatChange(QObject):
     def set_new_format(self, format, save_path):
         local_path = Path(str(QUrl(save_path).toLocalFile()).replace(f".{format}", ""))
 
-        subprocess.run(["ffmpeg", "-i", self.image.img_path, f'{local_path}.{format}'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run([cfg.ffmpeg_path, "-i", self.image.img_path, f'{local_path}.{format}'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

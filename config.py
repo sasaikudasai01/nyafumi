@@ -20,6 +20,15 @@ class Config(QObject):
             self.base_dir = Path(__file__).parent
 
         self.editing_photo_path = self.base_dir / "mama nyaf.jpg"
+
+
+
+        self.ffmpeg_path = self.base_dir / "ffmpeg" / "bin" / "ffmpeg.exe"
+        self.ffprobe_path = self.base_dir / "ffmpeg" / "bin" / "ffprobe.exe"
+
+        if not self.ffmpeg_path.exists():
+            self.ffmpeg_path = "ffmpeg" # попробовать использовать ffmpeg в path если его нет в корне проекта
+            self.ffprobe_path = "ffprobe"
     
     # сменить qml файл (новая страница)
     def set_view(self, engine, qml_path: QUrl):
