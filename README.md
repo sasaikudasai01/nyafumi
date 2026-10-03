@@ -1,4 +1,4 @@
-# nyafumi beta v1.1.1
+# nyafumi beta v1.1.2
 
 nyafumi is a program that lets you resize and crop images and, most importantly, prepares images for upload to the **Steam Workshop Showcase**. All you have to do is select **"STEAM"** and click **CROP**.
 
@@ -122,7 +122,7 @@ Crop saves the new image in the same folder as the original image (temporarily).
 
 ### Features
 
-Select the number of rows. **nyafumi will automatically replace the last byte with 67** so that Steam doesn't crop the image to a square in the showcase.
+Select the number of rows. **nyafumi will automatically replace the last byte with 21** so that Steam doesn't crop the image to a square in the showcase.
 Creates 5, 10, or 15 images, depending on the value of `rows`, and saves them to the `steam` folder (which is created automatically).
 
 ---

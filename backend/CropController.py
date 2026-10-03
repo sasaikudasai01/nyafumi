@@ -140,7 +140,7 @@ class UIState_crop(QObject):
 
             # редактирование байтов
             data = bytearray(Path(img_path).read_bytes())
-            data[-1] = 0x67 # замена последнего байта. это нужно чтобы стим нормально скушал картинку
+            data[-1] = 0x21 # замена последнего байта. это нужно чтобы стим нормально скушал картинку
             Path(img_path).write_bytes(data)
         
         print("images are created in:", local_path)
