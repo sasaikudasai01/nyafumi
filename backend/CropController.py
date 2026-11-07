@@ -3,6 +3,11 @@ from config import cfg
 import subprocess
 from pathlib import Path
 
+# Workshop showcase - Horizontal slices, default 5 parts x 150px, 1 row
+# Artwork Showcase  - Fixed two-part split (506px + 100px from 606px)
+# Featured Artwork  - One wide GIF, default 630px
+
+
 
 class UIState_crop(QObject):
     widthChanged = Signal()
